@@ -638,25 +638,66 @@
    </div> 
   </div> 
 
-<audio id="musica" loop>
-    <source src="biazin.mp3" type="audio/mpeg">
-</audio>
+<div id="texto-final"></div>
 
-<button id="btnMusica">🎵</button>
+    <audio id="musica" loop>
+        <source src="biazin.mp3" type="audio/mpeg">
+    </audio>
 
-<script>
-    const audio = document.getElementById('musica');
-    const btn = document.getElementById('btnMusica');
+    <button id="btnMusica">🎵</button>
 
-    btn.addEventListener('click', function() {
-        if (audio.paused) {
-            audio.play();
-            btn.innerHTML = '⏸️'; // Muda o ícone para pausa
-        } else {
-            audio.pause();
-            btn.innerHTML = '🎵'; // Volta para a nota musical
+    <script>
+        const audio = document.getElementById('musica');
+        const btn = document.getElementById('btnMusica');
+        const containerCoracao = document.getElementById('ui'); // Seu ID do coração
+        const displayTexto = document.getElementById('texto-final');
+        
+        const mensagem = "Você é o meu melhor código, Fer, maravilhosa, linda e amor da minha vidaaa 💙";
+        let index = 0;
+
+        function escreverTexto() {
+            if (index < mensagem.length) {
+                displayTexto.innerHTML += mensagem.charAt(index);
+                index++;
+                setTimeout(escreverTexto, 100);
+            }
         }
-    });
-</script>
-</body>
-</html>
+
+        // Sua função de estrelas que já está na foto
+        function dispararEstrelas() {
+            for (let i = 0; i < 50; i++) {
+                const e = document.createElement('div');
+                e.className = 'estrela';
+                e.style.left = Math.random() * 100 + 'vw';
+                e.style.top = Math.random() * -20 + 'vh';
+                const tamanho = Math.random() * 3 + 'px';
+                e.style.width = tamanho;
+                e.style.height = tamanho;
+                e.style.animation = `queda ${Math.random() * 3 + 2}s linear infinite`;
+                document.body.appendChild(e);
+            }
+        }
+
+        btn.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = '⏸️';
+                containerCoracao.classList.add('animar-coracao', 'pulsar');
+                dispararEstrelas(); 
+                
+                // Limpa o texto antes de começar a escrever (caso ela dê pause/play)
+                displayTexto.innerHTML = "";
+                index = 0;
+                
+                // Espera 5 segundos de música para começar a escrever
+                setTimeout(() => {
+                    displayTexto.style.opacity = "1";
+                    escreverTexto();
+                }, 5000);
+            } else {
+                audio.pause();
+                btn.innerHTML = '🎵';
+                containerCoracao.classList.remove('animar-coracao', 'pulsar');
+            }
+        });
+    </script>

@@ -745,3 +745,71 @@ body {
     background: rgba(0, 150, 255, 0.2);
     transform: scale(1.1);
 }
+/* Faz todas as camadas do coração começarem paradas */
+.love_horizontal, .love_vertical {
+    animation-play-state: paused !important;
+}
+
+/* Classe que o JavaScript vai ativar para dar o play na animação */
+.animar-coracao .love_horizontal, 
+.animar-coracao .love_vertical {
+    animation-play-state: running !important;
+}
+
+/* Estilo das estrelas (as partículas azuis) */
+.estrela {
+    position: absolute;
+    background: #0096ff; /* O azul que você escolheu */
+    border-radius: 50%;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes queda {
+    to { transform: translateY(100vh); }
+}
+/* 1. Pausa inicial das 100 camadas */
+.love_horizontal, .love_vertical {
+    animation-play-state: paused !important;
+}
+
+/* 2. Classe para ativar tudo no play */
+.animar-coracao .love_horizontal, 
+.animar-coracao .love_vertical {
+    animation-play-state: running !important;
+}
+
+/* 3. Efeito de Brilho Pulsante no Texto */
+.pulsar .love_word {
+    animation: pulsarBrilho 2s infinite alternate ease-in-out;
+}
+
+@keyframes pulsarBrilho {
+    from { text-shadow: 0 0 10px #0a007d; }
+    to { text-shadow: 0 0 30px #0096ff, 0 0 40px #0096ff; }
+}
+
+/* 4. Estilo das Estrelas e da Mensagem */
+.estrela {
+    position: absolute;
+    background: #0096ff;
+    border-radius: 50%;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#texto-final {
+    position: fixed;
+    bottom: 100px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-family: 'Dosis', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px #0096ff;
+    opacity: 0;
+    transition: opacity 2s ease-in;
+}
