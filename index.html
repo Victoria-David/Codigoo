@@ -3,7 +3,7 @@
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
   <link rel="stylesheet" href="styles.css">
-  <title>codigoo</title> 
+  <title>código do meu amorzinhoo </title> 
  </head> 
  <body mpa-version="9.0.21" mpa-extension-id="ibefaeehajgcpooopoegkifhgecigeeg"> 
   <div id="ui"> 
@@ -638,66 +638,154 @@
    </div> 
   </div> 
 
-<div id="texto-final"></div>
+</div> 
+</div> 
 
-    <audio id="musica" loop>
-        <source src="biazin.mp3" type="audio/mpeg">
-    </audio>
+<div id="minha-legenda" style="opacity: 0; position: fixed; top: 30px; left: 30px; z-index: 9999; color: white; font-family: 'Dosis', sans-serif;">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+        <div style="width: 12px; height: 12px; background: #0096ff;"></div> <span>Eu</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="width: 12px; height: 12px; background: #ff0000;"></div> <span>Você</span>
+    </div>
+</div>
 
-    <button id="btnMusica">🎵</button>
+<div id="container-final">
+    <div id="texto-final" style="color: white; font-size: 1.4rem; min-height: 50px;"></div>
+    
+    <div id="pergunta" style="opacity: 0; transition: opacity 1s;">
+        <p style="color: white; margin-bottom: 15px;">Amou?? Pensa bem em 🤨☹</p>
+        <button id="btnSim" class="btn-escolha">Sim</button>
+        <button id="btnNao" class="btn-escolha">Não</button>
+    </div>
+</div>
 
-    <script>
-        const audio = document.getElementById('musica');
-        const btn = document.getElementById('btnMusica');
-        const containerCoracao = document.getElementById('ui'); // Seu ID do coração
-        const displayTexto = document.getElementById('texto-final');
+<audio id="musica" loop>
+    <source src="biazin.mp3" type="audio/mpeg">
+</audio>
+<button id="btnMusica">🎵</button>
+
+<script>
+    const audio = document.getElementById('musica');
+    const btn = document.getElementById('btnMusica');
+    const container = document.body;
+    const texto = document.getElementById('texto-final');
+    const legenda = document.getElementById('minha-legenda');
+    const pergunta = document.getElementById('pergunta');
+    const btnSim = document.getElementById('btnSim');
+    const btnNao = document.getElementById('btnNao');
+    const msg = "Você é a minha pessoa preferida, sabia?? Pra sempre!! A mulher mais linda e perfeita do mundoo, você! 😍";
+    let i = 0;
+
+    function escrever() {
+        const elementoTexto = document.getElementById('texto-final');
+        elementoTexto.style.opacity = "1"; 
+
+        if (i < msg.length) {
+            elementoTexto.innerHTML += msg.charAt(i);
+            i++;
+            setTimeout(escrever, 80);
+        } else {
+            document.getElementById('pergunta').style.opacity = "1"; 
+        }
+    }
+
+    // Lógica do botão Não Fugir
+    btnNao.addEventListener('mouseover', function() {
+        const x = Math.random() * (window.innerWidth - btnNao.offsetWidth);
+        const y = Math.random() * (window.innerHeight - btnNao.offsetHeight);
+        btnNao.style.position = 'fixed';
+        btnNao.style.left = x + 'px';
+        btnNao.style.top = y + 'px';
+    });
+
+    // Lógica do botão Sim
+    btnSim.addEventListener('click', function() {
+        document.getElementById('texto-final').innerHTML = "Eu acho bomm mesmoo! 😌";
+        document.getElementById('texto-final').style.opacity = "1";
+        document.getElementById('pergunta').style.display = 'none';
+        confetes(); 
+    });
+
+    // Clique inicial na música
+    btn.addEventListener('click', function() {
+        if (audio.paused) {
+            audio.play();
+            btn.innerHTML = '⏸️';
+            container.classList.add('animar-coracao', 'pulsar');
+            
+            chuvaDeEstrelas();
+
+            setTimeout(() => {
+                legenda.style.opacity = "1";
+                escrever();
+            }, 5000);
+
+        } else {
+            audio.pause();
+            btn.innerHTML = '🎵';
+        }
+    });
+
+    // Cursor de florzinha
+    document.addEventListener('mousemove', function(e) {
+        const flor = document.createElement('div');
+        flor.innerHTML = '🌸';
+        flor.style.position = 'fixed';
+        flor.style.left = e.clientX + 'px';
+        flor.style.top = e.clientY + 'px';
+        flor.style.fontSize = '20px';
+        flor.style.pointerEvents = 'none';
+        flor.style.zIndex = '10001';
+        document.body.appendChild(flor);
+        setTimeout(() => flor.remove(), 1000);
+    });
+
+    function confetes() {
+        for (let j = 0; j < 100; j++) {
+            const c = document.createElement('div');
+            c.className = 'confete';
+            c.style.left = Math.random() * 100 + 'vw';
+            c.style.background = Math.random() > 0.5 ? '#0096ff' : '#ff0000';
+            c.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 4000);
+        }
+    }
+
+    function chuvaDeEstrelas() {
+    setInterval(() => {
+        const estrela = document.createElement('div');
+        estrela.className = 'estrela-viva';
         
-        const mensagem = "Você é o meu melhor código, Fer, maravilhosa, linda e amor da minha vidaaa 💙";
-        let index = 0;
+        // Configurações aleatórias
+        const tamanho = Math.random() * 4 + 2 + 'px';
+        estrela.style.width = tamanho;
+        estrela.style.height = tamanho;
+        estrela.style.left = Math.random() * 100 + 'vw';
+        estrela.style.top = '-10px'; // Começa fora da tela (no topo)
+        estrela.style.background = Math.random() > 0.5 ? '#0096ff' : '#ff0000';
+        estrela.style.boxShadow = `0 0 10px ${estrela.style.background}`;
 
-        function escreverTexto() {
-            if (index < mensagem.length) {
-                displayTexto.innerHTML += mensagem.charAt(index);
-                index++;
-                setTimeout(escreverTexto, 100);
-            }
-        }
+        document.body.appendChild(estrela);
 
-        // Sua função de estrelas que já está na foto
-        function dispararEstrelas() {
-            for (let i = 0; i < 50; i++) {
-                const e = document.createElement('div');
-                e.className = 'estrela';
-                e.style.left = Math.random() * 100 + 'vw';
-                e.style.top = Math.random() * -20 + 'vh';
-                const tamanho = Math.random() * 3 + 'px';
-                e.style.width = tamanho;
-                e.style.height = tamanho;
-                e.style.animation = `queda ${Math.random() * 3 + 2}s linear infinite`;
-                document.body.appendChild(e);
-            }
-        }
-
-        btn.addEventListener('click', function() {
-            if (audio.paused) {
-                audio.play();
-                btn.innerHTML = '⏸️';
-                containerCoracao.classList.add('animar-coracao', 'pulsar');
-                dispararEstrelas(); 
-                
-                // Limpa o texto antes de começar a escrever (caso ela dê pause/play)
-                displayTexto.innerHTML = "";
-                index = 0;
-                
-                // Espera 5 segundos de música para começar a escrever
-                setTimeout(() => {
-                    displayTexto.style.opacity = "1";
-                    escreverTexto();
-                }, 5000);
-            } else {
-                audio.pause();
-                btn.innerHTML = '🎵';
-                containerCoracao.classList.remove('animar-coracao', 'pulsar');
-            }
+        // Animação de queda via JS (Blindado)
+        const tempoQueda = Math.random() * 3000 + 4000; // Entre 4 e 7 segundos
+        
+        const animacao = estrela.animate([
+            { transform: 'translateY(0vh)', opacity: 1 },
+            { transform: 'translateY(105vh)', opacity: 0 }
+        ], {
+            duration: tempoQueda,
+            easing: 'linear'
         });
-    </script>
+
+        // Remove a estrela do site assim que a animação termina
+        animacao.onfinish = () => estrela.remove();
+        
+    }, 250); // Cria uma estrela a cada 250 milisegundos
+}
+</script>
+
+    
+

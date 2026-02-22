@@ -21,9 +21,14 @@
   background-color: rgba(0, 0, 0, 0.3);
 }
 body {
-  background: #000;
-  height: 100vh;
-  overflow: hidden;
+    background: #000;
+    height: 100vh;
+    overflow: hidden;
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' style='font-size:24px'><text y='20'>🌸</text></svg>"), auto;
+}
+
+button, .love_word, #ui {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' style='font-size:24px'><text y='20'>💙</text></svg>"), pointer;
 }
 
 #ui .love {
@@ -756,60 +761,124 @@ body {
     animation-play-state: running !important;
 }
 
-/* Estilo das estrelas (as partículas azuis) */
-.estrela {
-    position: absolute;
-    background: #0096ff; /* O azul que você escolheu */
-    border-radius: 50%;
-    opacity: 0.5;
-    pointer-events: none;
-    z-index: 1;
-}
-
-@keyframes queda {
-    to { transform: translateY(100vh); }
-}
-/* 1. Pausa inicial das 100 camadas */
+/* Pausa inicial das 100 camadas */
 .love_horizontal, .love_vertical {
     animation-play-state: paused !important;
 }
 
-/* 2. Classe para ativar tudo no play */
+/* Classe para ativar tudo no play */
 .animar-coracao .love_horizontal, 
 .animar-coracao .love_vertical {
     animation-play-state: running !important;
 }
 
-/* 3. Efeito de Brilho Pulsante no Texto */
+/* Efeito de Brilho Pulsante no Texto */
 .pulsar .love_word {
     animation: pulsarBrilho 2s infinite alternate ease-in-out;
 }
 
 @keyframes pulsarBrilho {
-    from { text-shadow: 0 0 10px #0a007d; }
-    to { text-shadow: 0 0 30px #0096ff, 0 0 40px #0096ff; }
+    0%   { text-shadow: 0 0 15px #004d84d6; }
+    50%  { text-shadow: 0 0 30px #ff0000; }
+    100% { text-shadow: 0 0 15px #004d84d6; }
 }
 
-/* 4. Estilo das Estrelas e da Mensagem */
-.estrela {
-    position: absolute;
+/* ESTILO DA LEGENDA */
+#minha-legenda {
+    pointer-events: none; 
+}
+
+/* ESTILO DO BOTÃO SIM E NÃO */
+.btn-escolha {
+    background: rgba(0, 150, 255, 0.2); 
+    color: white;
+    border: 2px solid #0096ff;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-family: 'Dosis', sans-serif;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.btn-escolha:hover {
     background: #0096ff;
-    border-radius: 50%;
-    opacity: 0.5;
-    pointer-events: none;
-    z-index: 1;
+    box-shadow: 0 0 15px #0096ff;
+    transform: scale(1.1);
 }
 
-#texto-final {
+/* CURSOR DE FLORZINHA */
+.flor-cursor {
     position: fixed;
-    bottom: 100px;
+    pointer-events: none;
+    z-index: 10001;
+    animation: sumirFlor 1s forwards;
+    font-size: 20px;
+}
+
+@keyframes sumirFlor {
+    0% { transform: scale(1) rotate(0deg); opacity: 1; }
+    100% { transform: scale(0.5) rotate(90deg); opacity: 0; }
+}
+
+/* --- CAIXA PRINCIPAL DOS TEXTOS --- */
+/* Essa é a regra que organiza tudo em uma coluna */
+#container-final {
+    position: fixed;
+    bottom: 50px; /* Distância do fundo da tela */
+    left: 0;
     width: 100%;
-    text-align: center;
+    display: flex; /* Ativa o modo de organização flexível */
+    flex-direction: column; /* Coloca um item embaixo do outro */
+    align-items: center; /* Centraliza tudo horizontalmente */
+    z-index: 10000; /* Garante que fique na frente de tudo */
+}
+
+/* --- A FRASE "PESSOA PREFERIDA" --- */
+#texto-final {
     color: #fff;
     font-family: 'Dosis', sans-serif;
     font-size: 1.5rem;
-    letter-spacing: 3px;
+    text-align: center;
     text-shadow: 0 0 10px #0096ff;
-    opacity: 0;
-    transition: opacity 2s ease-in;
+    opacity: 0; /* Começa invisível, o JS que vai mostrar */
+    transition: opacity 1s ease-in;
+    /* Essa margem é o "respiro" que impede a pergunta de subir */
+    margin-bottom: 30px; 
+    min-height: 1.5em; /* Garante que ele ocupe espaço mesmo vazio */
+    padding: 0 20px; /* Evita que o texto grude nas bordas da tela */
+}
+
+#pergunta {
+    color: white;
+    font-family: 'Dosis', sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 15px; /* Espaço entre a pergunta e os botões */
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Confetes da vitória */
+.confete {
+    position: fixed;
+    width: 8px;
+    height: 12px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: cairConfete linear forwards;
+}
+
+@keyframes cairConfete {
+    from { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+    to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.estrela-viva {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1; /* Fica atrás de tudo (botões, coração e texto) */
 }
